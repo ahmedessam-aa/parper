@@ -1,0 +1,19 @@
+{
+  "name": "أذكار — القرآن والصلاة والأذكار اليومية",
+  "short_name": "أذكار",
+  "description": "تطبيق إسلامي شامل: مواقيت الصلاة، القرآن الكريم كاملاً، السبحة الإلكترونية، الأذكار اليومية، وأحاديث نبوية مختارة.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#faf6ec",
+  "theme_color": "#064a35",
+  "dir": "rtl",
+  "lang": "ar",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
