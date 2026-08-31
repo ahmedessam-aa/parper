@@ -1,19 +1,30 @@
 'use strict';
 
 /*
-  ملاحظة هامة:
-  الإشعارات هنا تعمل عبر جدولة محلية داخل المتصفح (JS timers) بينما التطبيق
-  مفتوح أو يعمل في الخلفية على المتصفحات التي تدعم ذلك بعد تثبيت PWA.
-  لتفعيل إشعارات Push حقيقية تصل حتى لو كان التطبيق مغلقًا تمامًا، يلزم
-  خادم Push خلفي (Push Server + VAPID keys) وهو خارج نطاق موقع ثابت
-  HTML/CSS/JS فقط. هذا الحل هو أفضل بديل ممكن بدون Backend.
+  ملاحظة هامة وصادقة عن حدود المتصفح:
+  الإشعارات والأصوات هنا (الأذان، تذكير الصلاة على النبي) تعمل فعليًا
+  عبر ملفات صوتية محلية (adhan.mp3 و salawat.mp3) بينما
+  التطبيق مفتوح أو في الخلفية القريبة (تبديل تطبيقات بدون إغلاقه فعليًا).
+
+  هذا حد تقني في منصة الويب نفسها وليس قصورًا في الكود: عندما يُغلق
+  التطبيق تمامًا (يُزال من قائمة التطبيقات الأخيرة)، يتوقف تنفيذ أي
+  JavaScript تمامًا، و Service Worker نفسه لا يملك القدرة على تشغيل
+  ملفات صوت (لا يوجد Audio API داخله) — فلا يوجد أي طريقة على الويب
+  (ولا حتى بخادم Push) لتشغيل صوت تلقائي والتطبيق مغلق تمامًا؛ هذا
+  متاح فقط لتطبيقات native الحقيقية. لذلك: اترك التطبيق مفتوحًا في
+  الخلفية (لا تُغلقه بالكامل) ليستمر سماع الأذان والتذكيرات.
 */
+
+const ADHAN_AUDIO_URL = 'adhan.mp3';
+const SALAWAT_AUDIO_URL = 'salawat.mp3';
 
 const NotificationsModule = (()=>{
   let checkInterval = null;
   const firedToday = new Set();
   let firedDate = '';
+  let adhanAudioEl = null;
 
+  /* ---------------- permission ---------------- */
   async function requestPermission(){
     if(!('Notification' in window)){
       showToast('المتصفح لا يدعم الإشعارات');
@@ -25,61 +36,123 @@ const NotificationsModule = (()=>{
     return perm === 'granted';
   }
 
+  /* ---------------- OS-level notification ---------------- */
   async function fireNotification(title, body, tag){
-    if(Notification.permission !== 'granted') return;
+    if(!('Notification' in window) || Notification.permission !== 'granted') return;
     try{
       if('serviceWorker' in navigator){
         const reg = await navigator.serviceWorker.getRegistration();
         if(reg){
-          reg.showNotification(title, {
-            body,
-            icon: 'icons/icon-192.png',
-            badge: 'icons/icon-192.png',
-            tag,
-            dir: 'rtl',
-            lang: 'ar'
-          });
+          reg.showNotification(title, { body, icon:'icon-192.png', badge:'icon-192.png', tag, dir:'rtl', lang:'ar' });
           return;
         }
       }
-      new Notification(title, { body, icon: 'icons/icon-192.png', dir:'rtl', lang:'ar' });
+      new Notification(title, { body, icon:'icon-192.png', dir:'rtl', lang:'ar' });
     }catch(e){ /* silent */ }
   }
 
+  /* ---------------- in-app adhan banner ---------------- */
+  function showAdhanBanner(title, sub){
+    const banner = document.getElementById('adhanBanner');
+    document.getElementById('adhanBannerTitle').textContent = title;
+    document.getElementById('adhanBannerSub').textContent = sub;
+    banner.classList.add('show');
+    clearTimeout(banner._hideTimer);
+    banner._hideTimer = setTimeout(()=> hideAdhanBanner(), 45000);
+  }
+  function hideAdhanBanner(){
+    document.getElementById('adhanBanner').classList.remove('show');
+    stopAdhanAudio();
+  }
+  function playAdhanAudio(){
+    try{
+      if(!adhanAudioEl) adhanAudioEl = new Audio(ADHAN_AUDIO_URL);
+      adhanAudioEl.currentTime = 0;
+      adhanAudioEl.play().catch(()=>{
+        showToast('⚠️ المتصفح منع تشغيل صوت الأذان تلقائيًا — افتح التطبيق ودوس أي حاجة فيه مرة واحدة عشان يتفعّل');
+      });
+    }catch(e){ /* silent */ }
+  }
+  function stopAdhanAudio(){
+    if(adhanAudioEl){ adhanAudioEl.pause(); adhanAudioEl.currentTime = 0; }
+  }
+
+  function initBannerButtons(){
+    document.getElementById('adhanCloseBtn').addEventListener('click', hideAdhanBanner);
+    document.getElementById('adhanStopBtn').addEventListener('click', stopAdhanAudio);
+  }
+
+  /* ---------------- salawat (blessings on the Prophet) reminder ---------------- */
+  let salawatAudioEl = null;
+  function playSalawatAudio(){
+    try{
+      if(!salawatAudioEl) salawatAudioEl = new Audio(SALAWAT_AUDIO_URL);
+      salawatAudioEl.currentTime = 0;
+      salawatAudioEl.play().catch(()=>{
+        showToast('⚠️ المتصفح منع تشغيل الصوت تلقائيًا — دوس في أي مكان بالتطبيق مرة واحدة عشان يتفعّل الصوت التلقائي');
+      });
+    }catch(e){ /* silent */ }
+  }
+
+  function triggerSalawatReminder(){
+    playSalawatAudio();
+    showToast('🌿 اللهم صلِّ وسلِّم على نبينا محمد ﷺ');
+    fireNotification('تذكير', 'اللهم صلِّ وسلِّم على نبينا محمد ﷺ', 'salawat');
+  }
+
+  /* ---------------- unlock autoplay on first user interaction ----------------
+     Browsers block unprompted audio.play() unless the page already had a user
+     gesture. We "warm up" both audio elements the moment the user first taps
+     anywhere in the app, so later scheduled plays (adhan / salawat) go through
+     reliably for the rest of the session. */
+  let unlocked = false;
+  function unlockAudioOnce(){
+    if(unlocked) return;
+    unlocked = true;
+    [ADHAN_AUDIO_URL, SALAWAT_AUDIO_URL].forEach((src, i)=>{
+      try{
+        const el = i === 0 ? (adhanAudioEl || (adhanAudioEl = new Audio(src))) : (salawatAudioEl || (salawatAudioEl = new Audio(src)));
+        const prevVolume = el.volume;
+        el.volume = 0;
+        el.play().then(()=>{
+          el.pause();
+          el.currentTime = 0;
+          el.volume = prevVolume;
+        }).catch(()=>{ el.volume = prevVolume; });
+      }catch(e){ /* silent */ }
+    });
+    document.removeEventListener('click', unlockAudioOnce);
+    document.removeEventListener('touchstart', unlockAudioOnce);
+  }
+
+  /* ---------------- prayer / azkar / hadith schedule ---------------- */
   function todayStr(){
     const d = new Date();
     return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
   }
-
   function nowHHMM(){
     const d = new Date();
     return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
   }
 
   function buildSchedule(){
-    const schedule = []; // {time:'HH:MM', title, body, tag}
-
+    const schedule = [];
     const prayerOn = localStorage.getItem('notif_prayer') === '1';
     const azkarOn = localStorage.getItem('notif_azkar') === '1';
     const hadithOn = localStorage.getItem('notif_hadith') === '1';
 
-    if(prayerOn && PrayerModule.getTimings()){
+    if(prayerOn && window.PrayerModule && PrayerModule.getTimings()){
       const t = PrayerModule.getTimings();
       const labels = PrayerModule.PRAYER_LABELS;
       ['Fajr','Dhuhr','Asr','Maghrib','Isha'].forEach(key=>{
         const time = t[key].split(' ')[0];
-        schedule.push({
-          time,
-          title: `حان الآن وقت صلاة ${labels[key]}`,
-          body: 'حي على الصلاة، حي على الفلاح',
-          tag: 'prayer-' + key
-        });
+        schedule.push({ time, type:'prayer', prayerKey:key, title:`حان الآن وقت صلاة ${labels[key]}`, body:'حي على الصلاة، حي على الفلاح', tag:'prayer-'+key });
       });
     }
 
     if(azkarOn){
-      schedule.push({ time:'06:30', title:'أذكار الصباح', body:'لا تنسَ أذكار الصباح اليوم 🌅', tag:'azkar-morning' });
-      schedule.push({ time:'17:30', title:'أذكار المساء', body:'حان وقت أذكار المساء 🌙', tag:'azkar-evening' });
+      schedule.push({ time:'06:30', type:'basic', title:'أذكار الصباح', body:'لا تنسَ أذكار الصباح اليوم 🌅', tag:'azkar-morning' });
+      schedule.push({ time:'17:30', type:'basic', title:'أذكار المساء', body:'حان وقت أذكار المساء 🌙', tag:'azkar-evening' });
     }
 
     if(hadithOn){
@@ -89,7 +162,7 @@ const NotificationsModule = (()=>{
         return Math.floor((now-start)/86400000) % HADITH_DATA.length;
       })();
       const h = HADITH_DATA[idx];
-      schedule.push({ time:'09:00', title:'حديث اليوم', body: h.text.slice(0,80) + '…', tag:'daily-hadith' });
+      schedule.push({ time:'09:00', type:'basic', title:'حديث اليوم', body: h.text.slice(0,80) + '…', tag:'daily-hadith' });
     }
 
     return schedule;
@@ -100,26 +173,55 @@ const NotificationsModule = (()=>{
       firedDate = todayStr();
       firedToday.clear();
     }
-    const schedule = buildSchedule();
     const now = nowHHMM();
-    schedule.forEach(item=>{
+
+    // scheduled items (prayer / azkar / hadith)
+    buildSchedule().forEach(item=>{
       const key = item.tag + '-' + item.time;
       if(item.time === now && !firedToday.has(key)){
         firedToday.add(key);
         fireNotification(item.title, item.body, item.tag);
+        if(item.type === 'prayer'){
+          showAdhanBanner(item.title, item.body);
+          playAdhanAudio();
+        } else {
+          showToast(item.title);
+        }
       }
     });
+
+    // salawat every 30 minutes (:00 and :30)
+    const salawatOn = localStorage.getItem('notif_salawat') === '1';
+    if(salawatOn){
+      const mm = now.slice(3,5);
+      if(mm === '00' || mm === '30'){
+        const key = 'salawat-' + now;
+        if(!firedToday.has(key)){
+          firedToday.add(key);
+          triggerSalawatReminder();
+        }
+      }
+    }
   }
 
   function refreshSchedules(){
     clearInterval(checkInterval);
-    const anyOn = ['notif_prayer','notif_azkar','notif_hadith'].some(k => localStorage.getItem(k) === '1');
+    const anyOn = ['notif_prayer','notif_azkar','notif_hadith','notif_salawat'].some(k => localStorage.getItem(k) === '1');
     if(!anyOn) return;
-    if(Notification.permission !== 'granted') return;
-    checkInterval = setInterval(checkTick, 20000);
+    checkInterval = setInterval(checkTick, 15000);
     checkTick();
   }
 
-  return { requestPermission, refreshSchedules };
+  function init(){
+    initBannerButtons();
+    if('speechSynthesis' in window){
+      // warm up voice list (some browsers populate this asynchronously)
+      window.speechSynthesis.getVoices();
+    }
+    document.addEventListener('click', unlockAudioOnce, { once:false });
+    document.addEventListener('touchstart', unlockAudioOnce, { once:false, passive:true });
+  }
+
+  return { requestPermission, refreshSchedules, init };
 })();
 window.NotificationsModule = NotificationsModule;

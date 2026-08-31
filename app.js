@@ -6,6 +6,7 @@
 const NAV_ITEMS = [
   { id: 'home',   label: 'الرئيسية', icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>` },
   { id: 'quran',  label: 'القرآن',   icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5c-1.6-1.3-4-2-6.5-1.7v13c2.5-.3 4.9.4 6.5 1.7 1.6-1.3 4-2 6.5-1.7v-13c-2.5-.3-4.9.4-6.5 1.7z"/><line x1="12" y1="6.5" x2="12" y2="19.5"/></svg>` },
+  { id: 'listen', label: 'الاستماع', icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>` },
   { id: 'prayer', label: 'الصلاة',   icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 3.2"/></svg>` },
   { id: 'tasbih', label: 'السبحة',   icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="4.5" cy="8" r="1.7"/><circle cx="4.5" cy="16" r="1.7"/><circle cx="19.5" cy="8" r="1.7"/><circle cx="19.5" cy="16" r="1.7"/><circle cx="12" cy="3.2" r="1.7"/></svg>` },
   { id: 'azkar',  label: 'الأذكار',  icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21c-2-1-4-3.5-4-7 0-5 5-7 5-11 3 1 6 4 6 8 0 1.5-.5 2.5-1 3.5 1.6-.4 3-1.5 4-3 1 1.5 1.5 3 1.5 4.5 0 3.5-2.5 6-6 7"/></svg>` },
@@ -40,7 +41,12 @@ function navigateTo(pageId){
   location.hash = pageId;
 
   if(pageId === 'quran' && window.QuranModule) QuranModule.onEnter();
+  if(pageId === 'listen' && window.ListenModule) ListenModule.onEnter();
   if(pageId === 'hadith' && window.HadithPage) HadithPage.onEnter();
+  if(pageId === 'prophets' && window.ProphetsModule) ProphetsModule.onEnter();
+  if(pageId === 'seerah' && window.SeerahModule) SeerahModule.onEnter();
+  if(pageId === 'fatwa' && window.FatwaModule) FatwaModule.onEnter();
+  if(pageId === 'hifz' && window.HifzModule) HifzModule.onEnter();
 }
 
 document.addEventListener('click', (e)=>{
@@ -48,6 +54,12 @@ document.addEventListener('click', (e)=>{
   if(navEl){
     e.preventDefault();
     navigateTo(navEl.dataset.nav);
+    return;
+  }
+  const hifzEl = e.target.closest('[data-hifz-mode]');
+  if(hifzEl && window.HifzModule){
+    e.preventDefault();
+    HifzModule.openWithMode(hifzEl.dataset.hifzMode);
   }
 });
 
@@ -154,6 +166,43 @@ function showToast(msg){
 window.showToast = showToast;
 
 /* =========================================================
+   Theme toggle (light / dark)
+   ========================================================= */
+const SUN_ICON = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+const MOON_ICON = '<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>';
+
+function currentTheme(){
+  return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+}
+
+function applyThemeIcon(){
+  const icon = document.getElementById('themeIcon');
+  if(!icon) return;
+  // icon shown = the mode a tap will switch TO
+  icon.innerHTML = currentTheme() === 'light' ? MOON_ICON : SUN_ICON;
+}
+
+function updateThemeColorMeta(){
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.setAttribute('content', currentTheme() === 'light' ? '#0b6e4f' : '#062a1f');
+}
+
+function toggleTheme(){
+  const next = currentTheme() === 'light' ? 'dark' : 'light';
+  if(next === 'light') document.documentElement.setAttribute('data-theme', 'light');
+  else document.documentElement.removeAttribute('data-theme');
+  localStorage.setItem('azkar_theme', next);
+  applyThemeIcon();
+  updateThemeColorMeta();
+}
+
+function initThemeToggle(){
+  applyThemeIcon();
+  updateThemeColorMeta();
+  document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
+}
+
+/* =========================================================
    Settings sheet
    ========================================================= */
 function initSettingsSheet(){
@@ -171,6 +220,7 @@ function initSettingsSheet(){
     togglerPrayerNotif: 'notif_prayer',
     toggleAzkarNotif: 'notif_azkar',
     toggleHadithNotif: 'notif_hadith',
+    toggleSalawatNotif: 'notif_salawat',
     toggleVibrate: 'tasbih_vibrate',
   };
   Object.entries(toggles).forEach(([elId, key])=>{
@@ -180,7 +230,9 @@ function initSettingsSheet(){
     el.addEventListener('change', async ()=>{
       if(el.checked && key !== 'tasbih_vibrate'){
         const granted = await NotificationsModule.requestPermission();
-        if(!granted){ el.checked = false; showToast('يجب السماح بالإشعارات من إعدادات المتصفح'); return; }
+        if(!granted){
+          showToast('لن تظهر إشعارات النظام، لكن التنبيه والصوت داخل التطبيق هيفضلوا شغالين طول ما التطبيق مفتوح');
+        }
       }
       localStorage.setItem(key, el.checked ? '1' : '0');
       NotificationsModule.refreshSchedules();
@@ -228,6 +280,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   renderHomeHadith();
   renderHomeAzkarChips();
   initSettingsSheet();
+  initThemeToggle();
 
   if('serviceWorker' in navigator){
     navigator.serviceWorker.register('service-worker.js').catch(()=>{});
@@ -236,6 +289,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
   PrayerModule.init();
   TasbihModule.init();
   AzkarModule.init();
+  NotificationsModule.init();
+  TafsirModule.init();
 
   const startPage = location.hash.replace('#','') || 'home';
   navigateTo(startPage);

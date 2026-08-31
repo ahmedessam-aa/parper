@@ -1,20 +1,32 @@
-const CACHE_NAME = 'azkar-app-v1';
+const CACHE_NAME = 'azkar-app-v7';
 const APP_SHELL = [
   './',
   './index.html',
-  './css/style.css',
-  './js/app.js',
-  './js/prayer.js',
-  './js/quran.js',
-  './js/tasbih.js',
-  './js/azkar.js',
-  './js/notifications.js',
-  './js/data-azkar.js',
-  './js/data-hadith.js',
+  './style.css',
+  './app.js',
+  './prayer.js',
+  './quran.js',
+  './listen.js',
+  './tasbih.js',
+  './azkar.js',
+  './tafsir.js',
+  './hifz.js',
+  './content-pages.js',
+  './notifications.js',
+  './data-azkar.js',
+  './data-hadith.js',
+  './data-prophets.js',
+  './data-seerah.js',
+  './data-fatwa.js',
   './manifest.json',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
-  './icons/favicon.png'
+  './icon-192.png',
+  './icon-512.png',
+  './icon-192-maskable.png',
+  './icon-512-maskable.png',
+  './favicon.png',
+  './icon-180.png',
+  './adhan.mp3',
+  './salawat.mp3'
 ];
 
 self.addEventListener('install', (event)=>{
@@ -33,12 +45,19 @@ self.addEventListener('activate', (event)=>{
   self.clients.claim();
 });
 
-// Cache-first for app shell, network-first for API calls (prayer times / quran text)
+// Cache-first for app shell, network-first for API/audio calls (prayer times / quran text / recitations / adhan)
 self.addEventListener('fetch', (event)=>{
   const url = event.request.url;
-  const isAPI = url.includes('api.aladhan.com') || url.includes('api.alquran.cloud') || url.includes('nominatim.openstreetmap.org');
+  const isDynamic =
+    url.includes('api.aladhan.com') ||
+    url.includes('api.alquran.cloud') ||
+    url.includes('nominatim.openstreetmap.org') ||
+    url.includes('everyayah.com') ||
+    url.includes('mp3quran.net') ||
+    url.includes('cdn.jsdelivr.net') ||
+    url.includes('cdn.aladhan.com');
 
-  if(isAPI){
+  if(isDynamic){
     event.respondWith(
       fetch(event.request).catch(()=> caches.match(event.request))
     );
