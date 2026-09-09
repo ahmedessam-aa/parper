@@ -1,561 +1,3625 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>أذكار — رفيقك اليومي في القرآن والأذكار ومواقيت الصلاة</title>
-<meta name="description" content="تطبيق أذكار: مواقيت الصلاة، القرآن الكريم كاملاً، السبحة الإلكترونية، الأذكار اليومية، وأحاديث نبوية مختارة.">
-<meta name="theme-color" content="#062a1f">
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="favicon.png">
-<link rel="apple-touch-icon" href="icon-180.png">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<script>
-  (function(){
-    try{
-      if(localStorage.getItem('azkar_theme') === 'light'){
-        document.documentElement.setAttribute('data-theme','light');
-      }
-    }catch(e){}
-  })();
-</script>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="بن البهنساوي - قهوة لها حكاية من قلب البهنسا">
+
+    <title>بن البهنساوي | BAHNSAWY COFFEE</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
 </head>
+
+
 <body>
-<div class="app-shell">
 
-  <div class="adhan-banner" id="adhanBanner">
-    <span class="ic">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-    </span>
-    <div class="txt">
-      <b id="adhanBannerTitle">حان الآن وقت الصلاة</b>
-      <span id="adhanBannerSub">حي على الصلاة، حي على الفلاح</span>
-    </div>
-    <button class="stop-btn" id="adhanStopBtn">إيقاف الصوت</button>
-    <button class="close-btn" id="adhanCloseBtn" aria-label="إغلاق">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
-  </div>
 
-  <!-- ============ TOP APP BAR ============ -->
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="tb-brand">
-        <img src="icon-192.png" class="tb-logo" alt="أذكار">
-        <div class="tb-titles">
-          <div class="name">أذكار</div>
-          <div class="hijri" id="hijriDate">...</div>
-        </div>
-      </div>
-      <div class="tb-actions">
-        <button class="tb-icon-btn" id="themeToggleBtn" aria-label="تبديل الوضع الليلي/النهاري">
-          <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></svg>
-        </button>
-        <button class="tb-icon-btn" id="notifBtn" aria-label="الإشعارات">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-        </button>
-        <button class="tb-icon-btn" id="settingsBtn" aria-label="الإعدادات">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9c.23.5.63.9 1.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-        </button>
-      </div>
-    </div>
-  </header>
+<!-- =====================================================
+     PRELOADER
+===================================================== -->
 
-  <!-- ============ DESKTOP NAV ============ -->
-  <nav class="desktop-nav" id="desktopNav"></nav>
+<div class="preloader" id="preloader">
 
-  <main class="pages">
+    <img src="5.jpg" alt="بن البهنساوي">
 
-    <!-- ============ HOME ============ -->
-    <section class="page active" id="page-home">
-
-      <div class="hero-card">
-        <svg class="hero-star-bg" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice">
-          <g fill="none" stroke="#e7c67a" stroke-width="1">
-            <polygon points="100,10 130,70 190,70 145,110 160,175 100,140 40,175 55,110 10,70 70,70"/>
-          </g>
-        </svg>
-        <div class="hero-top-row">
-          <div class="hero-date">
-            التاريخ اليوم
-            <b id="gregDate">—</b>
-          </div>
-          <div class="hero-date" style="text-align:left;">
-            الموقع
-            <b id="locLabel">جارِ التحديد…</b>
-          </div>
-        </div>
-
-        <div class="next-prayer-block">
-          <div class="label">الصلاة القادمة</div>
-          <div class="name" id="nextPrayerName">—</div>
-          <div class="time" id="nextPrayerTime">--:--</div>
-          <div class="countdown" id="countdown">
-            <div class="seg"><b id="cdH">00</b><span>ساعة</span></div>
-            <div class="seg"><b id="cdM">00</b><span>دقيقة</span></div>
-            <div class="seg"><b id="cdS">00</b><span>ثانية</span></div>
-          </div>
-        </div>
-
-        <div class="mini-times" id="miniTimes">
-          <div class="mt" data-p="Fajr"><span>الفجر</span><b>--:--</b></div>
-          <div class="mt" data-p="Sunrise"><span>الشروق</span><b>--:--</b></div>
-          <div class="mt" data-p="Dhuhr"><span>الظهر</span><b>--:--</b></div>
-          <div class="mt" data-p="Asr"><span>العصر</span><b>--:--</b></div>
-          <div class="mt" data-p="Maghrib"><span>المغرب</span><b>--:--</b></div>
-          <div class="mt" data-p="Isha"><span>العشاء</span><b>--:--</b></div>
-        </div>
-      </div>
-
-      <div class="section-title">
-        <h2>
-          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.25C10.5 4.5 8 3.75 5.5 4c-1 3 0 8 6.5 12 6.5-4 7.5-9 6.5-12-2.5-.25-5 .5-6.5 2.25z"/></svg>
-          وصول سريع
-        </h2>
-      </div>
-      <div class="quick-grid">
-        <button class="quick-item" data-nav="quran">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5c-1.6-1.3-4-2-6.5-1.7v13c2.5-.3 4.9.4 6.5 1.7 1.6-1.3 4-2 6.5-1.7v-13c-2.5-.3-4.9.4-6.5 1.7z"/><line x1="12" y1="6.5" x2="12" y2="19.5"/></svg></div>
-          <span>القرآن</span>
-        </button>
-        <button class="quick-item" data-nav="listen">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
-          <span>الاستماع</span>
-        </button>
-        <button class="quick-item" data-nav="prayer">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 3.2"/></svg></div>
-          <span>الصلاة</span>
-        </button>
-        <button class="quick-item" data-nav="tasbih">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="4.5" cy="8" r="1.7"/><circle cx="4.5" cy="16" r="1.7"/><circle cx="19.5" cy="8" r="1.7"/><circle cx="19.5" cy="16" r="1.7"/><circle cx="12" cy="3.2" r="1.7"/></svg></div>
-          <span>السبحة</span>
-        </button>
-        <button class="quick-item" data-nav="azkar">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21c-2-1-4-3.5-4-7 0-5 5-7 5-11 3 1 6 4 6 8 0 1.5-.5 2.5-1 3.5 1.6-.4 3-1.5 4-3 1 1.5 1.5 3 1.5 4.5 0 3.5-2.5 6-6 7"/></svg></div>
-          <span>الأذكار</span>
-        </button>
-        <button class="quick-item" data-nav="hadith">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div>
-          <span>الأحاديث</span>
-        </button>
-        <button class="quick-item" data-nav="prophets">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L19 9l-4 3.3L16.2 17 12 14.3 7.8 17 9 12.3 5 9l5.1-1.4z"/></svg></div>
-          <span>قصص الأنبياء</span>
-        </button>
-        <button class="quick-item" data-nav="seerah">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 3.2"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/></svg></div>
-          <span>السيرة</span>
-        </button>
-        <button class="quick-item" data-nav="fatwa">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 17v.01M12 14c0-2.5 2.5-2 2.5-4.5A2.5 2.5 0 0012 7a2.5 2.5 0 00-2.5 2.5"/></svg></div>
-          <span>دليل الفتوى</span>
-        </button>
-        <button class="quick-item" data-hifz-mode="reading">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5c-1.6-1.3-4-2-6.5-1.7v13c2.5-.3 4.9.4 6.5 1.7 1.6-1.3 4-2 6.5-1.7v-13c-2.5-.3-4.9.4-6.5 1.7z"/><line x1="12" y1="6.5" x2="12" y2="19.5"/></svg></div>
-          <span>اختبار القراءة</span>
-        </button>
-        <button class="quick-item" data-hifz-mode="memorization">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/></svg></div>
-          <span>اختبار الحفظ</span>
-        </button>
-      </div>
-
-      <div class="section-title">
-        <h2>
-          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-          حديث اليوم
-        </h2>
-        <a class="link" data-nav="hadith">كل الأحاديث</a>
-      </div>
-      <div class="card hadith-card" id="homeHadithCard">
-        <span class="tag">حديث شريف</span>
-        <p class="hadith-text" id="homeHadithText">—</p>
-        <div class="hadith-meta">
-          <span class="src" id="homeHadithSrc">—</span>
-        </div>
-      </div>
-
-      <div class="section-title">
-        <h2>
-          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21c-2-1-4-3.5-4-7 0-5 5-7 5-11 3 1 6 4 6 8 0 1.5-.5 2.5-1 3.5 1.6-.4 3-1.5 4-3 1 1.5 1.5 3 1.5 4.5 0 3.5-2.5 6-6 7"/></svg>
-          أذكار سريعة
-        </h2>
-      </div>
-      <div class="azkar-quick-row" id="homeAzkarChips"></div>
-
-    </section>
-
-    <!-- ============ QURAN ============ -->
-    <section class="page" id="page-quran">
-      <div id="quranListView">
-        <div class="page-head" style="padding:0 0 4px;">
-          <h1>القرآن الكريم</h1>
-          <p>114 سورة — بشكل صفحات المصحف</p>
-        </div>
-        <div class="search-box">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="surahSearch" placeholder="ابحث عن سورة بالاسم أو الرقم…">
-        </div>
-        <div class="continue-card" id="continueCard" style="display:none;">
-          <div class="txt">
-            <span>متابعة القراءة</span>
-            <b id="continueLabel">—</b>
-          </div>
-          <button id="continueBtn">متابعة</button>
-        </div>
-        <div class="surah-list" id="surahList">
-          <div class="state-msg"><div class="spin"></div>جارِ تحميل قائمة السور…</div>
-        </div>
-      </div>
-
-      <div id="quranReaderView" style="display:none;">
-        <div class="back-row">
-          <button class="back-btn" id="quranBackBtn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-            رجوع لقائمة السور
-          </button>
-        </div>
-
-        <div class="reciter-bar" id="reciterBar"></div>
-
-        <div class="mushaf-frame">
-          <div class="mushaf-topline">
-            <span class="mushaf-surah-badge" id="mushafSurahBadge">—</span>
-            <span class="mushaf-page-num" id="mushafPageNum">صفحة — / 604</span>
-          </div>
-          <div class="mushaf-bismillah" id="mushafBismillah"></div>
-          <div id="mushafText" class="mushaf-text">
-            <div class="state-msg"><div class="spin"></div>جارِ تحميل الصفحة…</div>
-          </div>
-        </div>
-
-        <div class="audio-bar" id="audioBar" style="display:none;">
-          <button class="play-btn" id="audioPlayBtn">
-            <svg id="audioPlayIcon" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20"/></svg>
-          </button>
-          <div class="meta">
-            <b id="audioMetaTitle">استماع للصفحة</b>
-            <span id="audioMetaSub">بصوت —</span>
-          </div>
-          <button class="stop-btn" id="audioStopBtn" aria-label="إيقاف">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
-          </button>
-        </div>
-
-        <div class="mushaf-nav-row">
-          <button class="mushaf-nav-btn" id="nextPageBtn">الصفحة التالية <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-          <button class="mushaf-nav-btn" id="prevPageBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg> الصفحة السابقة</button>
-        </div>
-        <p class="mushaf-jump">اسحب يمينًا أو يسارًا للتنقل بين الصفحات</p>
-      </div>
-    </section>
-
-    <!-- ============ LISTEN (الاستماع) ============ -->
-    <section class="page" id="page-listen">
-      <div class="page-head" style="padding:0 0 4px;">
-        <h1>الاستماع للقرآن</h1>
-        <p>اختر سورة وقارئ — تشغيل متصل كامل بدون قطع، ويستمر أثناء تصفح باقي التطبيق</p>
-      </div>
-
-      <div class="listen-player-card">
-        <div class="listen-player-top">
-          <button class="listen-side-btn" id="listenPrevBtn" aria-label="السورة السابقة">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-          <button class="listen-play-main" id="listenPlayBtn" aria-label="تشغيل/إيقاف">
-            <svg class="listen-play-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20"/></svg>
-          </button>
-          <button class="listen-side-btn" id="listenNextBtn" aria-label="السورة التالية">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
-        </div>
-        <b class="listen-now-title" style="display:block;text-align:center;font-size:18px;margin-top:12px;">—</b>
-        <span class="listen-now-reciter" style="display:block;text-align:center;font-size:12.5px;color:var(--gold-soft);margin-top:2px;">—</span>
-        <div class="listen-seek-row">
-          <span class="listen-time-cur">0:00</span>
-          <input type="range" id="listenSeek" min="0" max="100" value="0" step="0.1">
-          <span class="listen-time-dur">0:00</span>
-        </div>
-      </div>
-
-      <div class="reciter-bar" id="listenReciterBar"></div>
-
-      <div class="search-box">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="listenSearch" placeholder="ابحث عن سورة بالاسم أو الرقم…">
-      </div>
-
-      <div class="surah-list" id="listenSurahList"></div>
-    </section>
-
-    <!-- ============ PRAYER TIMES ============ -->
-    <section class="page" id="page-prayer">
-      <div class="page-head" style="padding:0 0 4px;">
-        <h1>مواقيت الصلاة</h1>
-        <p id="prayerDateLabel">—</p>
-      </div>
-      <div class="location-bar">
-        <div class="loc-info">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span id="prayerLocLabel">جارِ تحديد الموقع…</span>
-        </div>
-        <button id="refreshLocBtn">تحديث</button>
-      </div>
-      <div class="prayer-list" id="prayerList">
-        <div class="state-msg"><div class="spin"></div>جارِ حساب المواقيت…</div>
-      </div>
-    </section>
-
-    <!-- ============ TASBIH ============ -->
-    <section class="page" id="page-tasbih">
-      <div class="page-head" style="padding:0 0 4px;">
-        <h1>السبحة الإلكترونية</h1>
-        <p>اضغط على الدائرة للتسبيح</p>
-      </div>
-      <div class="tasbih-wrap">
-        <div class="tasbih-target-select" id="dhikrChips">
-          <button class="dhikr-chip active" data-dhikr="سبحان الله">سبحان الله</button>
-          <button class="dhikr-chip" data-dhikr="الحمد لله">الحمد لله</button>
-          <button class="dhikr-chip" data-dhikr="الله أكبر">الله أكبر</button>
-          <button class="dhikr-chip" data-dhikr="أستغفر الله">أستغفر الله</button>
-        </div>
-
-        <div class="tasbih-ring" id="tasbihRing">
-          <div class="count" id="tasbihCount">0</div>
-          <div class="dhikr-current" id="tasbihCurrentDhikr">سبحان الله</div>
-          <div class="tap-hint">اضغط للعد</div>
-        </div>
-
-        <div class="tasbih-actions">
-          <button id="tasbihResetBtn">
-            <span class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></span>
-            تصفير
-          </button>
-          <button id="tasbihVibrateBtn">
-            <span class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v16M16 4v16M4 8v8M20 8v8"/></svg></span>
-            <span id="vibrateLabel">الاهتزاز: تشغيل</span>
-          </button>
-        </div>
-
-        <div class="tasbih-stats">
-          <div class="st"><b id="statToday">0</b><span>اليوم</span></div>
-          <div class="st"><b id="statTotal">0</b><span>الإجمالي</span></div>
-          <div class="st"><b id="statSessions">0</b><span>الجلسات</span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ AZKAR ============ -->
-    <section class="page" id="page-azkar">
-      <div class="page-head" style="padding:0 0 4px;">
-        <h1>الأذكار</h1>
-        <p>اضغط على أي ذكر لعدّ التكرار</p>
-      </div>
-      <div class="azkar-tabs" id="azkarTabs">
-        <button class="azkar-tab active" data-cat="morning">☀️ الصباح</button>
-        <button class="azkar-tab" data-cat="evening">🌙 المساء</button>
-        <button class="azkar-tab" data-cat="sleep">⭐ النوم</button>
-        <button class="azkar-tab" data-cat="afterPrayer">🤲 بعد الصلاة</button>
-      </div>
-      <div class="azkar-progress">
-        <span id="azkarProgressLabel">0 / 0</span>
-        <div class="bar"><i id="azkarProgressBar"></i></div>
-        <button id="azkarResetBtn" style="font-weight:800;color:var(--emerald);white-space:nowrap;">إعادة</button>
-      </div>
-      <div id="azkarList"></div>
-    </section>
-
-    <!-- ============ HADITH ============ -->
-    <section class="page" id="page-hadith">
-      <div class="page-head" style="padding:0 0 4px;">
-        <h1>الأحاديث النبوية</h1>
-        <p id="hadithCounter">—</p>
-      </div>
-      <div class="card hadith-card">
-        <span class="tag">حديث شريف</span>
-        <p class="hadith-text" id="hadithPageText">—</p>
-        <div class="hadith-meta">
-          <span class="src" id="hadithPageMeta">—</span>
-          <div class="hadith-nav">
-            <button id="hadithPrevBtn" aria-label="السابق"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-            <button id="hadithNextBtn" aria-label="التالي"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
-          </div>
-        </div>
-      </div>
-      <button class="btn btn-outline btn-block" id="hadithRandomBtn">حديث عشوائي</button>
-    </section>
-
-    <!-- ============ قصص الأنبياء ============ -->
-    <section class="page" id="page-prophets">
-      <div class="page-head" style="padding:0 0 4px;">
-        <h1>قصص الأنبياء</h1>
-        <p>ملخصات موجزة لقصص الأنبياء الخمسة والعشرين المذكورين في القرآن الكريم</p>
-      </div>
-      <div id="prophetsList"></div>
-    </section>
-
-    <!-- ============ السيرة النبوية ============ -->
-    <section class="page" id="page-seerah">
-      <div class="page-head" style="padding:0 0 4px;">
-        <h1>السيرة النبوية</h1>
-        <p>أهم أحداث حياة النبي محمد ﷺ بالترتيب الزمني</p>
-      </div>
-      <div class="azkar-tabs" id="seerahTabs"></div>
-      <div id="seerahTimeline"></div>
-    </section>
-
-    <!-- ============ دليل الفتوى ============ -->
-    <section class="page" id="page-fatwa">
-      <div class="page-head" style="padding:0 0 4px;">
-        <h1>دليل الفتوى</h1>
-        <p>روابط مباشرة لجهات ومواقع إفتاء رسمية وموثوقة</p>
-      </div>
-      <div class="card" style="padding:14px 16px; margin-bottom:6px; border-right:3px solid var(--gold);">
-        <p style="font-size:12.5px; color:var(--ink-soft); line-height:1.8;">
-          هذا القسم دليل لجهات إفتاء رسمية فقط — التطبيق لا يُصدر فتاوى ولا يضمن محتوى المواقع الخارجية. لأي سؤال شرعي دقيق، تواصل مع الجهة مباشرة.
-        </p>
-      </div>
-      <div id="fatwaList"></div>
-    </section>
-
-    <!-- ============ اختبار القراءة / اختبار الحفظ ============ -->
-    <section class="page" id="page-hifz">
-      <div id="hifzPickerView">
-        <div class="page-head" style="padding:0 0 4px;">
-          <h1 id="hifzModeTitle">اختبار القراءة</h1>
-          <p id="hifzModeDesc">الآيات ظاهرة قدامك — اقرأها بصوتك وهيتصحح نطقك</p>
-        </div>
-        <div class="hifz-mode-tabs">
-          <button class="hifz-mode-tab active" data-mode="reading">📖 اختبار القراءة</button>
-          <button class="hifz-mode-tab" data-mode="memorization">🧠 اختبار الحفظ</button>
-        </div>
-        <div class="card" id="hifzUnsupportedNote" style="display:none; padding:14px 16px; margin-bottom:14px; border-right:3px solid var(--gold);">
-          <p style="font-size:12.5px; color:var(--ink-soft); line-height:1.8;">
-            التعرف الصوتي غير مدعوم في هذا المتصفح. للحصول على أفضل تجربة، افتح
-            التطبيق من متصفح Chrome (على الكمبيوتر أو الأندرويد).
-          </p>
-        </div>
-        <div class="search-box">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="hifzSearch" placeholder="ابحث عن سورة بالاسم أو الرقم…">
-        </div>
-        <div class="surah-list" id="hifzSurahPicker">
-          <div class="state-msg"><div class="spin"></div>جارِ تحميل قائمة السور…</div>
-        </div>
-      </div>
-
-      <div id="hifzTestView" style="display:none;">
-        <div class="back-row">
-          <button class="back-btn" id="hifzBackBtn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-            رجوع لاختيار سورة أخرى
-          </button>
-        </div>
-        <div class="page-head" style="padding:0 0 4px;">
-          <h1 id="hifzSurahTitle">—</h1>
-          <p id="hifzProgressSummary">—</p>
-        </div>
-        <div id="hifzAyahList"></div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ============ BOTTOM NAV ============ -->
-  <nav class="bottom-nav">
-    <div class="bottom-nav-inner" id="bottomNav"></div>
-  </nav>
-
-  <!-- ============ SETTINGS SHEET ============ -->
-  <div class="sheet-overlay" id="sheetOverlay"></div>
-  <div class="sheet" id="settingsSheet">
-    <div class="sheet-handle"></div>
-    <h3>الإعدادات والإشعارات</h3>
-
-    <div class="settings-row">
-      <div class="info">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 3.2"/></svg></span>
-        <div class="txt"><b>تنبيه مواقيت الصلاة</b><span>إشعار عند دخول كل وقت صلاة</span></div>
-      </div>
-      <label class="switch"><input type="checkbox" id="togglerPrayerNotif"><span class="slider"></span></label>
+    <div class="loader-line">
+        <span></span>
     </div>
 
-    <div class="settings-row">
-      <div class="info">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21c-2-1-4-3.5-4-7 0-5 5-7 5-11 3 1 6 4 6 8 0 1.5-.5 2.5-1 3.5 1.6-.4 3-1.5 4-3 1 1.5 1.5 3 1.5 4.5 0 3.5-2.5 6-6 7"/></svg></span>
-        <div class="txt"><b>تذكير الأذكار</b><span>تذكير بأذكار الصباح والمساء</span></div>
-      </div>
-      <label class="switch"><input type="checkbox" id="toggleAzkarNotif"><span class="slider"></span></label>
-    </div>
+    <p>BAHNSAWY COFFEE</p>
 
-    <div class="settings-row">
-      <div class="info">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></span>
-        <div class="txt"><b>حديث يومي</b><span>إشعار يومي بحديث مختار</span></div>
-      </div>
-      <label class="switch"><input type="checkbox" id="toggleHadithNotif"><span class="slider"></span></label>
-    </div>
-
-    <div class="settings-row">
-      <div class="info">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6c-1.5-1.5-4-1.5-5.5 0L12 7.9 8.7 4.6c-1.5-1.5-4-1.5-5.5 0-1.5 1.5-1.5 4 0 5.5L12 18.7l8.8-8.6c1.5-1.5 1.5-4 0-5.5z"/></svg></span>
-        <div class="txt"><b>تذكير الصلاة على النبي ﷺ</b><span>تنبيه صوتي كل نصف ساعة</span></div>
-      </div>
-      <label class="switch"><input type="checkbox" id="toggleSalawatNotif"><span class="slider"></span></label>
-    </div>
-
-    <div class="settings-row">
-      <div class="info">
-        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4v16M16 4v16M4 8v8M20 8v8"/></svg></span>
-        <div class="txt"><b>اهتزاز السبحة</b><span>اهتزاز خفيف عند كل تسبيحة (موبايل)</span></div>
-      </div>
-      <label class="switch"><input type="checkbox" id="toggleVibrate" checked><span class="slider"></span></label>
-    </div>
-
-    <div class="install-btn-row">
-      <button class="btn btn-gold" id="installBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        تحميل تطبيق أذكار
-      </button>
-      <p id="installHint" style="font-size:11.5px;color:var(--ink-soft);text-align:center;margin-top:10px;">ثبّت التطبيق على شاشتك الرئيسية ليعمل مثل أي تطبيق آخر</p>
-    </div>
-  </div>
-
-  <!-- ============ TAFSIR SHEET ============ -->
-  <div class="sheet-overlay" id="tafsirSheetOverlay"></div>
-  <div class="sheet" id="tafsirSheet">
-    <div class="sheet-handle"></div>
-    <div class="back-row" style="justify-content:space-between;">
-      <h3 id="tafsirRef" style="margin-bottom:0;">التفسير</h3>
-      <button class="tb-icon-btn" id="tafsirCloseBtn" style="background:var(--panel-hi);">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-    <div class="reciter-bar" id="tafsirEditionBar" style="margin-top:14px;"></div>
-    <div id="tafsirBody" style="margin-top:10px;"></div>
-  </div>
-
-  <div class="toast" id="toast"></div>
 </div>
 
-<script src="data-azkar.js"></script>
-<script src="data-hadith.js"></script>
-<script src="data-prophets.js"></script>
-<script src="data-seerah.js"></script>
-<script src="data-fatwa.js"></script>
-<script src="prayer.js"></script>
-<script src="quran.js"></script>
-<script src="listen.js"></script>
-<script src="tasbih.js"></script>
-<script src="azkar.js"></script>
-<script src="tafsir.js"></script>
-<script src="hifz.js"></script>
-<script src="content-pages.js"></script>
-<script src="notifications.js"></script>
-<script src="app.js"></script>
+
+
+<!-- =====================================================
+     CUSTOM CURSOR
+===================================================== -->
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-text" id="cursorText">VIEW</div>
+
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="navbar" id="navbar">
+
+    <a href="#home" class="nav-logo">
+
+        <img src="5.jpg"
+             alt="بن البهنساوي">
+
+    </a>
+
+
+    <nav class="desktop-nav">
+
+        <a href="#home" class="active">
+            الرئيسية
+        </a>
+
+        <a href="#products">
+            المتجر
+        </a>
+
+        <a href="#story">
+            قصتنا
+        </a>
+
+        <a href="#journey">
+            رحلة القهوة
+        </a>
+
+        <a href="#contact">
+            تواصل معنا
+        </a>
+
+    </nav>
+
+
+    <div class="nav-actions">
+
+        <button
+            class="icon-button search-open"
+            aria-label="بحث">
+
+            <span>⌕</span>
+
+        </button>
+
+
+        <button
+            class="icon-button"
+            aria-label="الحساب">
+
+            <span>♙</span>
+
+        </button>
+
+
+        <button
+            class="cart-button"
+            id="cartOpen">
+
+            <span>🛒</span>
+
+            <b id="cartCount">0</b>
+
+        </button>
+
+
+        <button
+            class="mobile-menu"
+            id="mobileMenu">
+
+            <span></span>
+            <span></span>
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MOBILE MENU
+===================================================== -->
+
+<div class="mobile-navigation" id="mobileNavigation">
+
+    <div class="mobile-menu-inner">
+
+        <span class="mobile-menu-label">
+            MENU
+        </span>
+
+        <a href="#home">
+            الرئيسية
+        </a>
+
+        <a href="#products">
+            المتجر
+        </a>
+
+        <a href="#story">
+            قصتنا
+        </a>
+
+        <a href="#journey">
+            رحلة القهوة
+        </a>
+
+        <a href="#contact">
+            تواصل معنا
+        </a>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     SEARCH OVERLAY
+===================================================== -->
+
+<div class="search-overlay" id="searchOverlay">
+
+    <button class="close-search" id="closeSearch">
+        ×
+    </button>
+
+    <div class="search-content">
+
+        <span>
+            ابحث في البهنساوي
+        </span>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="اكتب اسم المنتج...">
+
+        <div id="searchResults"></div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero" id="home">
+
+    <div class="hero-scene" id="heroScene">
+
+
+        <!-- LEFT COFFEE IMAGE -->
+
+        <div class="hero-panel hero-left"
+             id="heroLeft">
+
+            <div class="hero-panel-overlay"></div>
+
+            <div class="panel-label">
+
+                <span>
+                    01
+                </span>
+
+                <strong>
+                    THE BEAN
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- RIGHT COFFEE IMAGE -->
+
+        <div class="hero-panel hero-right"
+             id="heroRight">
+
+            <div class="hero-panel-overlay"></div>
+
+            <div class="panel-label">
+
+                <span>
+                    02
+                </span>
+
+                <strong>
+                    THE CUP
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CENTER LINE -->
+
+        <div class="hero-line"
+             id="heroLine">
+        </div>
+
+
+
+        <!-- CENTER LOGO -->
+
+        <div class="hero-center"
+             id="heroCenter">
+
+            <div class="hero-est">
+                EST. 1980
+            </div>
+
+            <img
+                src="5.jpg"
+                class="hero-logo"
+                alt="بن البهنساوي">
+
+            <div class="hero-english">
+                AL BAHNSAWY
+            </div>
+
+            <div class="hero-coffee">
+                COFFEE
+            </div>
+
+            <div class="scroll-indicator">
+
+                <span></span>
+
+                <small>
+                    SCROLL DOWN
+                </small>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- VIDEO -->
+
+        <div class="hero-video"
+             id="heroVideoContainer">
+
+            <video
+                id="heroVideo"
+                muted
+                autoplay
+                loop
+                playsinline
+                preload="metadata"
+                poster="5.jpg">
+
+                <source
+                    src="956.mp4"
+                    type="video/mp4">
+
+            </video>
+
+            <div class="video-overlay"></div>
+
+            <button
+                class="video-sound"
+                id="videoSound"
+                type="button"
+                aria-label="تشغيل صوت الفيديو"
+                aria-pressed="false">
+
+                <span class="sound-icon">🔇</span>
+                <span class="sound-label">تشغيل الصوت</span>
+
+            </button>
+
+            <div class="video-content">
+
+                <span>
+                    BAHNSAWY COFFEE
+                </span>
+
+                <span>
+                    PREMIUM EGYPTIAN COFFEE
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- HERO TEXT -->
+
+        <div class="hero-side-text hero-side-right">
+
+            <span>
+                PREMIUM QUALITY
+            </span>
+
+            <small>
+                COFFEE FROM EGYPT
+            </small>
+
+        </div>
+
+
+        <div class="hero-side-text hero-side-left">
+
+            <span>
+                قهوة لها حكاية
+            </span>
+
+            <small>
+                من قلب البهنسا إلى فنجانك
+            </small>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     BENEFITS
+===================================================== -->
+
+<section class="benefits reveal-section">
+
+    <div class="benefit">
+
+        <div class="benefit-icon">
+            ◈
+        </div>
+
+        <div>
+            <strong>
+                جودة نضمنها
+            </strong>
+
+            <span>
+                نهتم بكل تفاصيل فنجانك
+            </span>
+        </div>
+
+    </div>
+
+
+    <div class="benefit">
+
+        <div class="benefit-icon">
+            ♨
+        </div>
+
+        <div>
+            <strong>
+                تحميص باحتراف
+            </strong>
+
+            <span>
+                درجات تحميص مدروسة
+            </span>
+        </div>
+
+    </div>
+
+
+    <div class="benefit">
+
+        <div class="benefit-icon">
+            ◉
+        </div>
+
+        <div>
+            <strong>
+                حبوب مختارة
+            </strong>
+
+            <span>
+                اختيار بعناية وجودة
+            </span>
+        </div>
+
+    </div>
+
+
+    <div class="benefit">
+
+        <div class="benefit-icon">
+            ◇
+        </div>
+
+        <div>
+            <strong>
+                تحميص طازج
+            </strong>
+
+            <span>
+                من المصنع إلى فنجانك
+            </span>
+        </div>
+
+    </div>
+
+
+    <div class="benefit">
+
+        <div class="benefit-icon">
+            ↗
+        </div>
+
+        <div>
+            <strong>
+                شحن سريع
+            </strong>
+
+            <span>
+                نوصل طلبك لحد بابك
+            </span>
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     STORY
+===================================================== -->
+
+<section class="story reveal-section"
+         id="story">
+
+    <div class="story-image reveal-image">
+
+        <img
+            src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1400&q=85"
+            alt="حبوب قهوة"
+            loading="lazy"
+            decoding="async">
+
+    </div>
+
+
+    <div class="story-content">
+
+        <span class="section-number">
+            01
+        </span>
+
+        <span class="section-label">
+            عن البهنساوي
+        </span>
+
+        <h2>
+
+            أكتر من مجرد
+            <br>
+
+            <em>
+                قهوة...
+            </em>
+
+            <br>
+
+            إنها إرث
+
+        </h2>
+
+
+        <p>
+
+            في البهنساوي، بنؤمن إن القهوة مش مجرد مشروب،
+            لكنها تجربة تبدأ من اختيار الحبة وتنتهي بأول رشفة.
+
+            نهتم باختيار أجود أنواع البن، ونعتمد على خبرة
+            التحميص والطحن والتعبئة لنقدم لك مذاقًا يليق
+            باسم البهنساوي.
+
+        </p>
+
+
+        <a href="#journey"
+           class="outline-button">
+
+            اكتشف رحلتنا
+
+            <span>
+                ←
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <div class="story-location">
+
+        <span class="location-icon">
+            ●
+        </span>
+
+        <strong>
+            من البهنسا
+            <br>
+            إلى العالم
+        </strong>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PRODUCTS
+===================================================== -->
+
+<section class="products-section"
+         id="products">
+
+    <div class="section-heading reveal-section">
+
+        <div>
+
+            <span class="section-label">
+                متجر البهنساوي
+            </span>
+
+            <h2>
+                اختار
+                <em>
+                    قهوتك
+                </em>
+            </h2>
+
+        </div>
+
+        <p>
+            مجموعة مختارة من منتجاتنا
+            <br>
+            لتناسب كل ذوق.
+        </p>
+
+    </div>
+
+
+
+    <!-- CATEGORIES -->
+
+    <div class="categories reveal-section">
+
+        <button
+            class="category active"
+            data-category="all">
+
+            الكل
+
+        </button>
+
+        <button
+            class="category"
+            data-category="ground">
+
+            بن سادة
+
+        </button>
+
+        <button
+            class="category"
+            data-category="blend">
+
+            بن محوج
+
+        </button>
+
+        <button
+            class="category"
+            data-category="espresso">
+
+            إسبريسو
+
+        </button>
+
+        <button
+            class="category"
+            data-category="special">
+
+            توليفات خاصة
+
+        </button>
+
+        <button
+            class="category"
+            data-category="offers">
+
+            عروض وباقات
+
+        </button>
+
+    </div>
+
+
+
+    <!-- PRODUCTS GRID -->
+
+    <div
+        class="products-grid"
+        id="productsGrid">
+
+
+        <!-- PRODUCT 1 -->
+
+        <article
+            class="product-card reveal-card"
+            data-category="blend"
+            data-name="بن البهنساوي المحوج">
+
+            <div class="product-image">
+
+                <span class="product-badge">
+                    الأكثر مبيعًا
+                </span>
+
+                <button
+                    class="wishlist">
+
+                    ♡
+
+                </button>
+
+                <img
+                    src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=900&q=85"
+                    alt="بن البهنساوي المحوج"
+                    loading="lazy"
+                    decoding="async">
+
+                <button
+                    class="quick-view"
+                    data-product="0">
+
+                    عرض سريع
+
+                </button>
+
+            </div>
+
+
+            <div class="product-info">
+
+                <span class="product-type">
+                    BAHNSAWY BLEND
+                </span>
+
+                <h3>
+                    بن البهنساوي المحوج
+                </h3>
+
+                <div class="stars">
+                    ★★★★★
+                    <small>
+                        (48)
+                    </small>
+                </div>
+
+                <div class="product-bottom">
+
+                    <div>
+
+                        <strong>
+                            185
+                        </strong>
+
+                        <small>
+                            جنيه
+                        </small>
+
+                    </div>
+
+                    <button
+                        class="add-cart"
+                        data-product="0">
+
+                        أضف للسلة
+                        <span>+</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- PRODUCT 2 -->
+
+        <article
+            class="product-card reveal-card"
+            data-category="ground"
+            data-name="بن البهنساوي سادة">
+
+            <div class="product-image">
+
+                <button
+                    class="wishlist">
+
+                    ♡
+
+                </button>
+
+                <img
+                    src="https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?auto=format&fit=crop&w=900&q=85"
+                    alt="بن البهنساوي سادة"
+                    loading="lazy"
+                    decoding="async">
+
+                <button
+                    class="quick-view"
+                    data-product="1">
+
+                    عرض سريع
+
+                </button>
+
+            </div>
+
+
+            <div class="product-info">
+
+                <span class="product-type">
+                    PURE COFFEE
+                </span>
+
+                <h3>
+                    بن البهنساوي سادة
+                </h3>
+
+                <div class="stars">
+                    ★★★★★
+                    <small>
+                        (36)
+                    </small>
+                </div>
+
+                <div class="product-bottom">
+
+                    <div>
+
+                        <strong>
+                            320
+                        </strong>
+
+                        <small>
+                            جنيه
+                        </small>
+
+                    </div>
+
+                    <button
+                        class="add-cart"
+                        data-product="1">
+
+                        أضف للسلة
+                        <span>+</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- PRODUCT 3 -->
+
+        <article
+            class="product-card reveal-card"
+            data-category="espresso"
+            data-name="إسبريسو مميز">
+
+            <div class="product-image">
+
+                <span class="product-badge">
+                    جديد
+                </span>
+
+                <button
+                    class="wishlist">
+
+                    ♡
+
+                </button>
+
+                <img
+                    src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=900&q=85"
+                    alt="إسبريسو"
+                    loading="lazy"
+                    decoding="async">
+
+                <button
+                    class="quick-view"
+                    data-product="2">
+
+                    عرض سريع
+
+                </button>
+
+            </div>
+
+
+            <div class="product-info">
+
+                <span class="product-type">
+                    ESPRESSO
+                </span>
+
+                <h3>
+                    إسبريسو مميز
+                </h3>
+
+                <div class="stars">
+                    ★★★★★
+                    <small>
+                        (27)
+                    </small>
+                </div>
+
+                <div class="product-bottom">
+
+                    <div>
+
+                        <strong>
+                            220
+                        </strong>
+
+                        <small>
+                            جنيه
+                        </small>
+
+                    </div>
+
+                    <button
+                        class="add-cart"
+                        data-product="2">
+
+                        أضف للسلة
+                        <span>+</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- PRODUCT 4 -->
+
+        <article
+            class="product-card reveal-card"
+            data-category="special"
+            data-name="توليفة البهنساوي الخاصة">
+
+            <div class="product-image">
+
+                <span class="product-badge">
+                    PREMIUM
+                </span>
+
+                <button
+                    class="wishlist">
+
+                    ♡
+
+                </button>
+
+                <img
+                    src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=900&q=85"
+                    alt="توليفة خاصة"
+                    loading="lazy"
+                    decoding="async">
+
+                <button
+                    class="quick-view"
+                    data-product="3">
+
+                    عرض سريع
+
+                </button>
+
+            </div>
+
+
+            <div class="product-info">
+
+                <span class="product-type">
+                    SPECIAL BLEND
+                </span>
+
+                <h3>
+                    توليفة البهنساوي الخاصة
+                </h3>
+
+                <div class="stars">
+                    ★★★★★
+                    <small>
+                        (61)
+                    </small>
+                </div>
+
+                <div class="product-bottom">
+
+                    <div>
+
+                        <strong>
+                            899
+                        </strong>
+
+                        <small>
+                            جنيه
+                        </small>
+
+                    </div>
+
+                    <button
+                        class="add-cart"
+                        data-product="3">
+
+                        أضف للسلة
+                        <span>+</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- PRODUCT 5 -->
+
+        <article
+            class="product-card reveal-card"
+            data-category="ground"
+            data-name="بن تركي فاخر">
+
+            <div class="product-image">
+
+                <button
+                    class="wishlist">
+
+                    ♡
+
+                </button>
+
+                <img
+                    src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=85"
+                    alt="بن تركي"
+                    loading="lazy"
+                    decoding="async">
+
+                <button
+                    class="quick-view"
+                    data-product="4">
+
+                    عرض سريع
+
+                </button>
+
+            </div>
+
+
+            <div class="product-info">
+
+                <span class="product-type">
+                    TURKISH COFFEE
+                </span>
+
+                <h3>
+                    بن تركي فاخر
+                </h3>
+
+                <div class="stars">
+                    ★★★★★
+                    <small>
+                        (31)
+                    </small>
+                </div>
+
+                <div class="product-bottom">
+
+                    <div>
+
+                        <strong>
+                            175
+                        </strong>
+
+                        <small>
+                            جنيه
+                        </small>
+
+                    </div>
+
+                    <button
+                        class="add-cart"
+                        data-product="4">
+
+                        أضف للسلة
+                        <span>+</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- PRODUCT 6 -->
+
+        <article
+            class="product-card reveal-card"
+            data-category="blend"
+            data-name="بن محوج مخصوص">
+
+            <div class="product-image">
+
+                <button
+                    class="wishlist">
+
+                    ♡
+
+                </button>
+
+                <img
+                    src="https://images.unsplash.com/photo-1510707577719-ae7c14805e32?auto=format&fit=crop&w=900&q=85"
+                    alt="بن محوج"
+                    loading="lazy"
+                    decoding="async">
+
+                <button
+                    class="quick-view"
+                    data-product="5">
+
+                    عرض سريع
+
+                </button>
+
+            </div>
+
+
+            <div class="product-info">
+
+                <span class="product-type">
+                    SPECIAL BLEND
+                </span>
+
+                <h3>
+                    بن محوج مخصوص
+                </h3>
+
+                <div class="stars">
+                    ★★★★★
+                    <small>
+                        (42)
+                    </small>
+                </div>
+
+                <div class="product-bottom">
+
+                    <div>
+
+                        <strong>
+                            245
+                        </strong>
+
+                        <small>
+                            جنيه
+                        </small>
+
+                    </div>
+
+                    <button
+                        class="add-cart"
+                        data-product="5">
+
+                        أضف للسلة
+                        <span>+</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     COFFEE SCROLL EXPERIENCE
+     Isolated Section
+========================= -->
+
+<section class="coffee-scroll-section">
+
+  <div class="coffee-scroll-sticky">
+
+    <!-- Background -->
+    <div class="coffee-scroll-bg"></div>
+    <div class="coffee-scroll-glow"></div>
+
+    <!-- Text -->
+    <div class="coffee-scroll-content">
+
+      <span class="coffee-scroll-label">
+        THE PERFECT POUR
+      </span>
+
+      <h2 class="coffee-scroll-title">
+        كل فنجان<br>
+        له حكايته
+      </h2>
+
+      <p class="coffee-scroll-description">
+        من أول لحظة تبدأ فيها القهوة في السقوط،
+        تبدأ معها الحكاية.
+      </p>
+
+    </div>
+
+
+    <!-- =========================
+         COFFEE VISUAL
+    ========================== -->
+
+    <div class="coffee-scroll-visual">
+
+      <!-- Coffee Pourer -->
+      <div class="coffee-scroll-pourer">
+
+        <img
+          src="66.png"
+          alt="Coffee"
+        >
+
+      </div>
+
+
+      <!-- Coffee Stream -->
+      <div class="coffee-scroll-stream"></div>
+
+
+      <!-- Cup -->
+      <div class="coffee-scroll-cup-area">
+
+        <!-- Steam -->
+        <span class="coffee-scroll-steam coffee-scroll-steam-1"></span>
+        <span class="coffee-scroll-steam coffee-scroll-steam-2"></span>
+        <span class="coffee-scroll-steam coffee-scroll-steam-3"></span>
+
+
+        <!-- Cup Handle -->
+        <div class="coffee-scroll-cup-handle"></div>
+
+
+        <!-- Cup -->
+        <div class="coffee-scroll-cup">
+
+          <!-- Coffee -->
+          <div class="coffee-scroll-liquid"></div>
+
+          <!-- Coffee Reflection -->
+          <div class="coffee-scroll-reflection"></div>
+
+        </div>
+
+
+        <!-- Shadow -->
+        <div class="coffee-scroll-shadow"></div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Scroll Progress -->
+    <div class="coffee-scroll-progress">
+
+      <span class="coffee-scroll-progress-number">
+        0%
+      </span>
+
+      <div class="coffee-scroll-progress-line">
+        <div class="coffee-scroll-progress-fill"></div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<style>
+
+/* =====================================================
+   COFFEE SCROLL SECTION
+   Everything is isolated with coffee-scroll-
+===================================================== */
+
+.coffee-scroll-section {
+
+  position: relative;
+
+  width: 100%;
+
+  height: 450vh;
+
+  margin: 0;
+
+  padding: 0;
+
+  overflow: visible;
+
+  background: #080604;
+
+  font-family: "Cairo", Arial, sans-serif;
+
+  direction: rtl;
+
+}
+
+
+/* =====================================================
+   STICKY AREA
+===================================================== */
+
+.coffee-scroll-sticky {
+
+  position: sticky;
+
+  top: 0;
+
+  width: 100%;
+
+  height: 100vh;
+
+  min-height: 600px;
+
+  overflow: hidden;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(111, 61, 28, 0.28),
+      transparent 34%
+    ),
+    linear-gradient(
+      120deg,
+      #080604,
+      #120b07 50%,
+      #080604
+    );
+
+}
+
+
+/* =====================================================
+   BACKGROUND
+===================================================== */
+
+.coffee-scroll-bg {
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+
+    radial-gradient(
+      ellipse at 50% 65%,
+      rgba(117, 60, 27, .16),
+      transparent 45%
+    );
+
+}
+
+
+.coffee-scroll-glow {
+
+  position: absolute;
+
+  width: 650px;
+
+  height: 650px;
+
+  left: 50%;
+
+  top: 50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(159, 91, 45, .13),
+      transparent 68%
+    );
+
+  filter: blur(25px);
+
+  pointer-events: none;
+
+}
+
+
+/* =====================================================
+   TEXT
+===================================================== */
+
+.coffee-scroll-content {
+
+  position: absolute;
+
+  left: 8%;
+
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  width: 340px;
+
+  z-index: 20;
+
+  text-align: left;
+
+}
+
+
+.coffee-scroll-label {
+
+  display: block;
+
+  color: #bd8658;
+
+  font-size: 11px;
+
+  font-weight: 500;
+
+  letter-spacing: 4px;
+
+  margin-bottom: 22px;
+
+}
+
+
+.coffee-scroll-title {
+
+  margin: 0;
+
+  padding: 0;
+
+  color: #f5eee8;
+
+  font-size: clamp(42px, 5vw, 76px);
+
+  line-height: 1.08;
+
+  font-weight: 800;
+
+  letter-spacing: -2px;
+
+}
+
+
+.coffee-scroll-description {
+
+  margin:
+
+    25px
+
+    0
+
+    0
+
+    auto;
+
+  max-width: 300px;
+
+  color: #9b8e84;
+
+  font-size: 14px;
+
+  line-height: 2;
+
+}
+
+
+/* =====================================================
+   MAIN VISUAL
+===================================================== */
+
+.coffee-scroll-visual {
+
+  position: relative;
+
+  width: 720px;
+
+  height: 680px;
+
+  z-index: 10;
+
+}
+
+
+/* =====================================================
+   POURER IMAGE
+===================================================== */
+
+.coffee-scroll-pourer {
+
+  position: absolute;
+
+  width: 330px;
+
+  height: 430px;
+
+  top: 20px;
+
+  right: 55px;
+
+  overflow: hidden;
+
+  transform-origin:
+    bottom right;
+
+  opacity: 0;
+
+  z-index: 4;
+
+  will-change:
+    transform,
+    opacity;
+
+}
+
+
+.coffee-scroll-pourer img {
+
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  object-position: center;
+
+  filter:
+
+    brightness(.55)
+
+    contrast(1.12)
+
+    saturate(.75);
+
+}
+
+
+/* =====================================================
+   COFFEE STREAM
+===================================================== */
+
+.coffee-scroll-stream {
+
+  position: absolute;
+
+  top: 302px;
+
+    left: 225px;
+
+    right: auto;
+
+  width: 7px;
+
+    height: 175px;
+
+  border-radius: 20px;
+
+  transform:
+
+    scaleY(0);
+
+  transform-origin:
+
+    top center;
+
+  opacity: 0;
+
+  background:
+
+    linear-gradient(
+      to bottom,
+      #d49351,
+      #8c461f 45%,
+      #421a0b
+    );
+
+  box-shadow:
+
+    0 0 8px rgba(191, 105, 48, .4),
+
+    0 0 18px rgba(137, 63, 25, .18);
+
+    z-index: 5;
+
+  will-change:
+    transform,
+    opacity;
+
+}
+
+
+/* =====================================================
+   CUP AREA
+===================================================== */
+
+.coffee-scroll-cup-area {
+
+  position: absolute;
+
+  left: 80px;
+
+  bottom: 65px;
+
+  width: 330px;
+
+  height: 240px;
+
+  z-index: 8;
+
+}
+
+
+/* =====================================================
+   CUP
+===================================================== */
+
+.coffee-scroll-cup {
+
+  position: absolute;
+
+  left: 35px;
+
+  bottom: 25px;
+
+  width: 235px;
+
+  height: 160px;
+
+  overflow: hidden;
+
+  border-radius:
+
+    12px
+
+    12px
+
+    80px
+
+    80px;
+
+  background:
+
+    linear-gradient(
+      105deg,
+      #bdb0a3,
+      #fffdf8 38%,
+      #d2c5b9 100%
+    );
+
+  box-shadow:
+
+    inset -18px 0 25px rgba(0,0,0,.13),
+
+    inset 7px 0 12px rgba(255,255,255,.28),
+
+    0 30px 60px rgba(0,0,0,.48);
+
+  z-index: 4;
+
+}
+
+
+/* =====================================================
+   CUP RIM
+===================================================== */
+
+.coffee-scroll-cup::before {
+
+  content: "";
+
+  position: absolute;
+
+  left: 8px;
+
+  top: -6px;
+
+  width: 219px;
+
+  height: 45px;
+
+  border-radius: 50%;
+
+  background:
+
+    linear-gradient(
+      to bottom,
+      #fffdf9,
+      #c9bbb0
+    );
+
+  box-shadow:
+
+    inset 0 -8px 10px rgba(0,0,0,.15);
+
+  z-index: 8;
+
+}
+
+
+/* =====================================================
+   COFFEE LIQUID
+===================================================== */
+
+.coffee-scroll-liquid {
+
+  position: absolute;
+
+  left: 17px;
+
+  bottom: 0;
+
+  width: 201px;
+
+  height: 0;
+
+  border-radius:
+
+    50%
+
+    50%
+
+    25px
+
+    25px;
+
+  background:
+
+    radial-gradient(
+      ellipse at 50% 20%,
+      #a96b3e,
+      #632d15 45%,
+      #351307 100%
+    );
+
+  z-index: 6;
+
+  transition:
+
+    height .04s linear;
+
+}
+
+
+/* Coffee surface */
+
+.coffee-scroll-liquid::before {
+
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  top: -12px;
+
+  width: 100%;
+
+  height: 31px;
+
+  border-radius: 50%;
+
+  background:
+
+    radial-gradient(
+      ellipse,
+      #a96a3d,
+      #55230f 65%,
+      #301006
+    );
+
+}
+
+
+/* =====================================================
+   COFFEE REFLECTION
+===================================================== */
+
+.coffee-scroll-reflection {
+
+  position: absolute;
+
+  left: 65px;
+
+  top: 24px;
+
+  width: 60px;
+
+  height: 10px;
+
+  border-radius: 50%;
+
+  background: rgba(255,255,255,.17);
+
+  transform: rotate(-12deg);
+
+  opacity: 0;
+
+  z-index: 10;
+
+}
+
+
+/* =====================================================
+   CUP HANDLE
+===================================================== */
+
+.coffee-scroll-cup-handle {
+
+  position: absolute;
+
+  left: 232px;
+
+  bottom: 52px;
+
+  width: 105px;
+
+  height: 105px;
+
+  border:
+
+    25px solid #c9bcb0;
+
+  border-left: 0;
+
+  border-radius:
+
+    0
+
+    55%
+
+    55%
+
+    0;
+
+  z-index: 2;
+
+}
+
+
+/* =====================================================
+   CUP SHADOW
+===================================================== */
+
+.coffee-scroll-shadow {
+
+  position: absolute;
+
+  left: 0;
+
+  bottom: 0;
+
+  width: 340px;
+
+  height: 45px;
+
+  border-radius: 50%;
+
+  background: rgba(0,0,0,.58);
+
+  filter: blur(17px);
+
+  z-index: 1;
+
+}
+
+
+/* =====================================================
+   STEAM
+===================================================== */
+
+.coffee-scroll-steam {
+
+  position: absolute;
+
+  bottom: 190px;
+
+  width: 4px;
+
+  height: 90px;
+
+  border-radius: 50%;
+
+  background:
+
+    linear-gradient(
+      to top,
+      transparent,
+      rgba(255,255,255,.25),
+      transparent
+    );
+
+  filter: blur(3px);
+
+  opacity: 0;
+
+  z-index: 15;
+
+}
+
+
+.coffee-scroll-steam-1 {
+
+  left: 100px;
+
+}
+
+
+.coffee-scroll-steam-2 {
+
+  left: 145px;
+
+  height: 105px;
+
+}
+
+
+.coffee-scroll-steam-3 {
+
+  left: 180px;
+
+  height: 85px;
+
+}
+
+
+@keyframes coffee-scroll-steam-animation {
+
+  0% {
+
+    transform:
+      translateY(10px)
+      translateX(0)
+      scaleX(1);
+
+    opacity: 0;
+
+  }
+
+  35% {
+
+    opacity: .65;
+
+  }
+
+  100% {
+
+    transform:
+      translateY(-55px)
+      translateX(12px)
+      scaleX(2);
+
+    opacity: 0;
+
+  }
+
+}
+
+
+/* =====================================================
+   PROGRESS
+===================================================== */
+
+.coffee-scroll-progress {
+
+  position: absolute;
+
+  right: 45px;
+
+  bottom: 45px;
+
+  width: 150px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  z-index: 30;
+
+}
+
+
+.coffee-scroll-progress-number {
+
+  min-width: 35px;
+
+  color: #8d7e74;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 11px;
+
+  direction: ltr;
+
+}
+
+
+.coffee-scroll-progress-line {
+
+  position: relative;
+
+  width: 100px;
+
+  height: 1px;
+
+  background: rgba(255,255,255,.15);
+
+}
+
+
+.coffee-scroll-progress-fill {
+
+  position: absolute;
+
+  left: 0;
+
+  top: 0;
+
+  width: 0;
+
+  height: 100%;
+
+  background: #bd8150;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1000px) {
+
+  .coffee-scroll-content {
+
+    left: 5%;
+
+    width: 280px;
+
+  }
+
+  .coffee-scroll-visual {
+
+    transform: scale(.82);
+
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .coffee-scroll-section {
+
+    height: 420vh;
+
+  }
+
+    .coffee-scroll-sticky {
+
+        height: 100svh;
+
+        min-height: 100svh;
+
+    }
+
+  .coffee-scroll-content {
+
+    top: 55px;
+
+    left: 25px;
+
+    width: 240px;
+
+    transform: none;
+
+    text-align: left;
+
+  }
+
+  .coffee-scroll-label {
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 10px;
+
+  }
+
+  .coffee-scroll-title {
+
+    font-size: 32px;
+
+    letter-spacing: -1px;
+
+  }
+
+  .coffee-scroll-description {
+
+    display: none;
+
+  }
+
+    .coffee-scroll-pourer {
+
+        right: 172px;
+
+    }
+
+    .coffee-scroll-stream {
+
+        left: 190px;
+
+    }
+
+    .coffee-scroll-cup-area {
+
+        left: 45px;
+
+    }
+
+    .coffee-scroll-visual {
+
+        position: absolute;
+
+        left: 50%;
+
+        top: 58%;
+
+        transform:
+            translate(-50%, -50%)
+            scale(.58);
+
+    }
+
+  .coffee-scroll-progress {
+
+    right: 25px;
+
+    bottom: 25px;
+
+  }
+
+}
+
+
+@media (max-width: 450px) {
+
+  .coffee-scroll-content {
+
+    left: 20px;
+
+    top: 35px;
+
+  }
+
+  .coffee-scroll-title {
+
+    font-size: 28px;
+
+  }
+
+    .coffee-scroll-visual {
+
+        transform:
+            translate(-50%, -50%)
+            scale(.50);
+
+    }
+
+}
+
+
+@media (max-width: 380px) {
+
+    .coffee-scroll-visual {
+
+        transform:
+            translate(-50%, -50%)
+            scale(.42);
+
+    }
+
+}
+
+
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .coffee-scroll-section {
+
+    height: 100vh;
+
+  }
+
+  .coffee-scroll-sticky {
+
+    position: relative;
+
+  }
+
+}
+
+</style>
+
+
+<script>
+
+(function () {
+
+  "use strict";
+
+
+  /* =====================================================
+     ELEMENTS
+  ===================================================== */
+
+  const coffeeSection =
+    document.querySelector(
+      ".coffee-scroll-section"
+    );
+
+  if (!coffeeSection) return;
+
+
+  const coffeePourer =
+    coffeeSection.querySelector(
+      ".coffee-scroll-pourer"
+    );
+
+  const coffeeStream =
+    coffeeSection.querySelector(
+      ".coffee-scroll-stream"
+    );
+
+  const coffeeLiquid =
+    coffeeSection.querySelector(
+      ".coffee-scroll-liquid"
+    );
+
+  const coffeeReflection =
+    coffeeSection.querySelector(
+      ".coffee-scroll-reflection"
+    );
+
+  const coffeeProgressFill =
+    coffeeSection.querySelector(
+      ".coffee-scroll-progress-fill"
+    );
+
+  const coffeeProgressNumber =
+    coffeeSection.querySelector(
+      ".coffee-scroll-progress-number"
+    );
+
+  const coffeeTitle =
+    coffeeSection.querySelector(
+      ".coffee-scroll-title"
+    );
+
+  const coffeeDescription =
+    coffeeSection.querySelector(
+      ".coffee-scroll-description"
+    );
+
+  const coffeeSteams =
+    coffeeSection.querySelectorAll(
+      ".coffee-scroll-steam"
+    );
+
+
+  /* =====================================================
+     HELPERS
+  ===================================================== */
+
+  function coffeeClamp(
+    value,
+    min,
+    max
+  ) {
+
+    return Math.min(
+      Math.max(value, min),
+      max
+    );
+
+  }
+
+
+  function coffeeMap(
+    value,
+    inputMin,
+    inputMax,
+    outputMin,
+    outputMax
+  ) {
+
+    return (
+
+      (value - inputMin) *
+
+      (outputMax - outputMin)
+
+      /
+
+      (inputMax - inputMin)
+
+    ) + outputMin;
+
+  }
+
+
+  /* =====================================================
+     SCROLL ANIMATION
+  ===================================================== */
+
+  function coffeeUpdateAnimation() {
+
+    const sectionRect =
+      coffeeSection.getBoundingClientRect();
+
+
+    const sectionHeight =
+      coffeeSection.offsetHeight;
+
+
+    const viewportHeight =
+      window.innerHeight;
+
+
+    const scrollableHeight =
+      sectionHeight -
+      viewportHeight;
+
+
+    const sectionProgress =
+      -sectionRect.top;
+
+
+    let progress =
+      sectionProgress /
+      scrollableHeight;
+
+
+    progress =
+      coffeeClamp(
+        progress,
+        0,
+        1
+      );
+
+
+    /* =================================================
+       PROGRESS
+    ================================================= */
+
+    const percentage =
+      Math.round(progress * 100);
+
+
+    coffeeProgressFill.style.width =
+      percentage + "%";
+
+
+    coffeeProgressNumber.textContent =
+      percentage + "%";
+
+
+    /* =================================================
+       POURER
+    ================================================= */
+
+    const pourProgress =
+      coffeeClamp(
+
+        coffeeMap(
+          progress,
+          0.04,
+          0.35,
+          0,
+          1
+        ),
+
+        0,
+        1
+
+      );
+
+
+    const pourX =
+      coffeeMap(
+        pourProgress,
+        0,
+        1,
+        170,
+        0
+      );
+
+
+    const pourRotation =
+      coffeeMap(
+        pourProgress,
+        0,
+        1,
+        0,
+        -17
+      );
+
+
+    const pourScale =
+      coffeeMap(
+        pourProgress,
+        0,
+        1,
+        .88,
+        1
+      );
+
+
+    coffeePourer.style.transform =
+
+      "translateX(" +
+      pourX +
+      "px) " +
+
+      "rotate(" +
+      pourRotation +
+      "deg) " +
+
+      "scale(" +
+      pourScale +
+      ")";
+
+
+    coffeePourer.style.opacity =
+
+      coffeeClamp(
+
+        coffeeMap(
+          progress,
+          0.01,
+          0.10,
+          0,
+          1
+        ),
+
+        0,
+        1
+
+      );
+
+
+    /* =================================================
+       COFFEE STREAM
+    ================================================= */
+
+    const streamProgress =
+      coffeeClamp(
+
+        coffeeMap(
+          progress,
+          0.20,
+          0.58,
+          0,
+          1
+        ),
+
+        0,
+        1
+
+      );
+
+
+    coffeeStream.style.transform =
+
+      "scaleY(" +
+      streamProgress +
+      ")";
+
+
+    coffeeStream.style.opacity =
+      streamProgress;
+
+
+    /* =================================================
+       COFFEE LIQUID
+    ================================================= */
+
+    const fillProgress =
+      coffeeClamp(
+
+        coffeeMap(
+          progress,
+          0.27,
+          0.78,
+          0,
+          1
+        ),
+
+        0,
+        1
+
+      );
+
+
+    const liquidHeight =
+      coffeeMap(
+        fillProgress,
+        0,
+        1,
+        0,
+        105
+      );
+
+
+    coffeeLiquid.style.height =
+      liquidHeight + "px";
+
+
+    /* =================================================
+       REFLECTION
+    ================================================= */
+
+    coffeeReflection.style.opacity =
+      fillProgress;
+
+
+    /* =================================================
+       TEXT
+    ================================================= */
+
+    if (progress < 0.23) {
+
+      coffeeTitle.innerHTML =
+        "كل فنجان<br>له حكايته";
+
+      coffeeDescription.textContent =
+        "من أول لحظة تبدأ فيها القهوة في السقوط، تبدأ معها الحكاية.";
+
+    }
+
+    else if (progress < 0.52) {
+
+      coffeeTitle.innerHTML =
+        "لحظة<br>الصب";
+
+      coffeeDescription.textContent =
+        "تنساب القهوة ببطء، لتكشف عن لونها ورائحتها وتفاصيلها.";
+
+    }
+
+    else if (progress < 0.80) {
+
+      coffeeTitle.innerHTML =
+        "يتكوّن<br>المذاق";
+
+      coffeeDescription.textContent =
+        "كل قطرة تضيف شيئًا جديدًا حتى يصل الفنجان إلى لحظته المثالية.";
+
+    }
+
+    else {
+
+      coffeeTitle.innerHTML =
+        "جاهز<br>للاستمتاع";
+
+      coffeeDescription.textContent =
+        "فنجان مكتمل، لحظة هادئة، وقهوة تستحق أن تتذوقها.";
+
+    }
+
+
+    /* =================================================
+       STEAM
+    ================================================= */
+
+    if (progress > 0.78) {
+
+      coffeeSteams.forEach(
+        function (steam, index) {
+
+          steam.style.opacity = "1";
+
+          steam.style.animation =
+            "coffee-scroll-steam-animation " +
+            (2 + index * .35) +
+            "s infinite ease-in-out";
+
+        }
+      );
+
+    }
+
+    else {
+
+      coffeeSteams.forEach(
+        function (steam) {
+
+          steam.style.opacity = "0";
+
+          steam.style.animation = "none";
+
+        }
+      );
+
+    }
+
+  }
+
+
+  /* =====================================================
+     PERFORMANCE OPTIMIZATION
+  ===================================================== */
+
+  let coffeeTicking = false;
+
+
+  function coffeeRequestUpdate() {
+
+    if (!coffeeTicking) {
+
+      window.requestAnimationFrame(
+        function () {
+
+          coffeeUpdateAnimation();
+
+          coffeeTicking = false;
+
+        }
+      );
+
+      coffeeTicking = true;
+
+    }
+
+  }
+
+
+  window.addEventListener(
+    "scroll",
+    coffeeRequestUpdate,
+    {
+      passive: true
+    }
+  );
+
+
+  window.addEventListener(
+    "resize",
+    coffeeRequestUpdate
+  );
+
+
+  /* Initial */
+
+  coffeeUpdateAnimation();
+
+
+})();
+
+</script>
+<!-- =====================================================
+     FACTORY / JOURNEY
+===================================================== -->
+
+<section class="journey"
+         id="journey">
+
+    <div class="journey-background">
+
+        <img
+            src="https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=2200&q=85"
+            alt="Coffee beans"
+            loading="lazy"
+            decoding="async">
+
+    </div>
+
+
+    <div class="journey-overlay"></div>
+
+
+    <div class="journey-content">
+
+        <span class="section-label">
+            رحلة القهوة
+        </span>
+
+        <h2>
+            من الحبة
+            <br>
+            إلى
+            <em>
+                الفنجان
+            </em>
+        </h2>
+
+
+        <div class="journey-steps">
+
+
+            <div class="journey-step">
+
+                <span>
+                    01
+                </span>
+
+                <div class="step-icon">
+                    ◈
+                </div>
+
+                <h3>
+                    اختيار الحبوب
+                </h3>
+
+                <p>
+                    نختار أفضل أنواع البن بعناية.
+                </p>
+
+            </div>
+
+
+            <div class="journey-step">
+
+                <span>
+                    02
+                </span>
+
+                <div class="step-icon">
+                    ♨
+                </div>
+
+                <h3>
+                    التحميص
+                </h3>
+
+                <p>
+                    درجات تحميص محسوبة للحفاظ على النكهة.
+                </p>
+
+            </div>
+
+
+            <div class="journey-step">
+
+                <span>
+                    03
+                </span>
+
+                <div class="step-icon">
+                    ◌
+                </div>
+
+                <h3>
+                    الطحن
+                </h3>
+
+                <p>
+                    طحن مناسب حسب نوع القهوة.
+                </p>
+
+            </div>
+
+
+            <div class="journey-step">
+
+                <span>
+                    04
+                </span>
+
+                <div class="step-icon">
+                    ◇
+                </div>
+
+                <h3>
+                    التعبئة
+                </h3>
+
+                <p>
+                    نحافظ على الجودة حتى تصل إليك.
+                </p>
+
+            </div>
+
+
+            <div class="journey-step">
+
+                <span>
+                    05
+                </span>
+
+                <div class="step-icon">
+                    ☕
+                </div>
+
+                <h3>
+                    فنجانك
+                </h3>
+
+                <p>
+                    هنا تبدأ تجربتك مع البهنساوي.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     WHY BAHNSAWY
+===================================================== -->
+
+<section class="why-section reveal-section">
+
+    <div class="why-heading">
+
+        <span class="section-label">
+            لماذا البهنساوي؟
+        </span>
+
+        <h2>
+            مش مجرد
+            <br>
+            <em>
+                قهوة.
+            </em>
+        </h2>
+
+    </div>
+
+
+    <div class="why-grid">
+
+        <div class="why-item">
+
+            <span>
+                01
+            </span>
+
+            <h3>
+                خبرة
+            </h3>
+
+            <p>
+                خبرة في عالم القهوة
+                وتحضير التوليفات المناسبة
+                لعشاق القهوة.
+            </p>
+
+        </div>
+
+
+        <div class="why-item">
+
+            <span>
+                02
+            </span>
+
+            <h3>
+                جودة
+            </h3>
+
+            <p>
+                نهتم باختيار الحبوب
+                ومراحل الإنتاج المختلفة
+                حتى تحصل على مذاق ثابت.
+            </p>
+
+        </div>
+
+
+        <div class="why-item">
+
+            <span>
+                03
+            </span>
+
+            <h3>
+                طزاجة
+            </h3>
+
+            <p>
+                نهتم بعملية التحميص
+                والتعبئة للحفاظ على
+                رائحة ومذاق القهوة.
+            </p>
+
+        </div>
+
+
+        <div class="why-item">
+
+            <span>
+                04
+            </span>
+
+            <h3>
+                ثقة
+            </h3>
+
+            <p>
+                هدفنا بناء علاقة طويلة
+                مع كل شخص يختار
+                البهنساوي.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     OFFER
+===================================================== -->
+
+<section class="offer reveal-section">
+
+    <div class="offer-image">
+
+        <img
+            src="https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=1500&q=85"
+            alt="Bahnsawy Coffee"
+            loading="lazy"
+            decoding="async">
+
+    </div>
+
+
+    <div class="offer-content">
+
+        <span>
+            BAHNSAWY BOX
+        </span>
+
+        <h2>
+            باقة
+            <br>
+            القهوة
+            <em>
+                الكاملة
+            </em>
+        </h2>
+
+        <p>
+            4 اختيارات من منتجات البهنساوي
+            في باقة واحدة لعشاق التجربة.
+        </p>
+
+        <div class="offer-price">
+
+            <strong>
+                899
+            </strong>
+
+            <span>
+                جنيه
+            </span>
+
+        </div>
+
+        <button
+            class="gold-button"
+            data-product="3">
+
+            اطلب الباقة
+
+            <span>
+                ←
+            </span>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     TESTIMONIALS
+===================================================== -->
+
+<section class="testimonials reveal-section">
+
+    <div class="testimonial-heading">
+
+        <span class="section-label">
+            آراء عملائنا
+        </span>
+
+        <h2>
+            ماذا يقول
+            <br>
+            <em>
+                عملاؤنا؟
+            </em>
+        </h2>
+
+    </div>
+
+
+    <div class="testimonial-slider"
+         id="testimonialSlider">
+
+
+        <article class="testimonial active">
+
+            <div class="quote">
+                “
+            </div>
+
+            <p>
+                طعم مختلف فعلًا، واضح إن اختيار
+                البن والتحميص معمولين باهتمام.
+            </p>
+
+            <div class="customer">
+
+                <span>
+                    م
+                </span>
+
+                <div>
+                    <strong>
+                        محمد أحمد
+                    </strong>
+
+                    <small>
+                        عميل منذ 2024
+                    </small>
+                </div>
+
+            </div>
+
+            <div class="testimonial-stars">
+                ★★★★★
+            </div>
+
+        </article>
+
+
+        <article class="testimonial">
+
+            <div class="quote">
+                “
+            </div>
+
+            <p>
+                جربت المحوج والسادة، الاتنين
+                ممتازين والتغليف محترم جدًا.
+            </p>
+
+            <div class="customer">
+
+                <span>
+                    أ
+                </span>
+
+                <div>
+                    <strong>
+                        أحمد محمود
+                    </strong>
+
+                    <small>
+                        عميل منذ 2023
+                    </small>
+                </div>
+
+            </div>
+
+            <div class="testimonial-stars">
+                ★★★★★
+            </div>
+
+        </article>
+
+
+        <article class="testimonial">
+
+            <div class="quote">
+                “
+            </div>
+
+            <p>
+                البهنساوي بقى من القهوة الأساسية
+                عندنا في البيت.
+            </p>
+
+            <div class="customer">
+
+                <span>
+                    س
+                </span>
+
+                <div>
+                    <strong>
+                        سامح علي
+                    </strong>
+
+                    <small>
+                        عميل منذ 2025
+                    </small>
+                </div>
+
+            </div>
+
+            <div class="testimonial-stars">
+                ★★★★★
+            </div>
+
+        </article>
+
+    </div>
+
+
+    <div class="testimonial-controls">
+
+        <button id="testimonialPrev">
+            →
+        </button>
+
+        <span>
+            <b id="testimonialNumber">
+                01
+            </b>
+            / 03
+        </span>
+
+        <button id="testimonialNext">
+            ←
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     NEWSLETTER
+===================================================== -->
+
+<section class="newsletter reveal-section">
+
+    <div>
+
+        <span class="section-label">
+            STAY CONNECTED
+        </span>
+
+        <h2>
+            خليك أول واحد
+            <br>
+            يعرف
+            <em>
+                الجديد.
+            </em>
+        </h2>
+
+    </div>
+
+
+    <form
+        class="newsletter-form"
+        id="newsletterForm">
+
+        <input
+            type="email"
+            placeholder="البريد الإلكتروني"
+            required>
+
+        <button>
+            اشترك
+            <span>
+                ←
+            </span>
+        </button>
+
+    </form>
+
+</section>
+
+
+
+<!-- =====================================================
+     CONTACT
+===================================================== -->
+
+<section class="contact"
+         id="contact">
+
+    <div class="contact-image">
+
+        <img
+            src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=1600&q=85"
+            alt="Coffee shop"
+            loading="lazy"
+            decoding="async">
+
+    </div>
+
+
+    <div class="contact-content">
+
+        <span class="section-label">
+            تواصل معنا
+        </span>
+
+        <h2>
+            خلينا
+            <br>
+            <em>
+                نتكلم.
+            </em>
+        </h2>
+
+        <div class="contact-list">
+
+            <a href="#">
+                <span>
+                    WhatsApp
+                </span>
+                <strong>
+                    010 123 4567
+                </strong>
+            </a>
+
+            <a href="#">
+                <span>
+                    Email
+                </span>
+                <strong>
+                    info@bahnsawycoffee.com
+                </strong>
+            </a>
+
+            <a href="#">
+                <span>
+                    Location
+                </span>
+                <strong>
+                    مصر
+                </strong>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div class="footer-top">
+
+        <div class="footer-brand">
+
+            <img
+                src="5.jpg"
+                alt="بن البهنساوي">
+
+            <p>
+                قهوة لها حكاية
+                <br>
+                من قلب البهنسا إلى فنجانك.
+            </p>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>
+                المتجر
+            </h4>
+
+            <a href="#products">
+                كل المنتجات
+            </a>
+
+            <a href="#products">
+                بن سادة
+            </a>
+
+            <a href="#products">
+                بن محوج
+            </a>
+
+            <a href="#products">
+                إسبريسو
+            </a>
+
+            <a href="#products">
+                العروض
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>
+                معلومات
+            </h4>
+
+            <a href="#story">
+                من نحن
+            </a>
+
+            <a href="#journey">
+                مصنعنا
+            </a>
+
+            <a href="#">
+                الشحن والتوصيل
+            </a>
+
+            <a href="#">
+                الأسئلة الشائعة
+            </a>
+
+            <a href="#">
+                سياسة الخصوصية
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>
+                تابعنا
+            </h4>
+
+            <a href="#">
+                Facebook
+            </a>
+
+            <a href="#">
+                Instagram
+            </a>
+
+            <a href="#">
+                TikTok
+            </a>
+
+            <a href="#">
+                WhatsApp
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 BAHNSAWY COFFEE
+        </span>
+
+        <span>
+            MADE FOR COFFEE LOVERS
+        </span>
+
+        <span>
+            جميع الحقوق محفوظة
+        </span>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =====================================================
+     CART DRAWER
+===================================================== -->
+
+<div class="cart-overlay"
+     id="cartOverlay">
+</div>
+
+
+<aside class="cart-drawer"
+       id="cartDrawer">
+
+    <div class="cart-header">
+
+        <div>
+
+            <span>
+                YOUR BAG
+            </span>
+
+            <h3>
+                سلة التسوق
+            </h3>
+
+        </div>
+
+        <button id="cartClose">
+            ×
+        </button>
+
+    </div>
+
+
+    <div class="cart-items"
+         id="cartItems">
+
+        <div class="empty-cart">
+
+            <div>
+                🛒
+            </div>
+
+            <p>
+                السلة فارغة
+            </p>
+
+            <button
+                onclick="closeCart(); document.querySelector('#products').scrollIntoView({behavior:'smooth'})">
+
+                ابدأ التسوق
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="cart-footer">
+
+        <div class="cart-total">
+
+            <span>
+                الإجمالي
+            </span>
+
+            <strong>
+                <b id="cartTotal">0</b>
+                جنيه
+            </strong>
+
+        </div>
+
+        <button
+            class="checkout-button">
+
+            إتمام الطلب
+
+            <span>
+                ←
+            </span>
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =====================================================
+     PRODUCT MODAL
+===================================================== -->
+
+<div class="product-modal"
+     id="productModal">
+
+    <div class="modal-inner">
+
+        <button
+            class="modal-close"
+            id="modalClose">
+
+            ×
+
+        </button>
+
+
+        <div class="modal-image">
+
+            <img
+                id="modalImage"
+                src=""
+                alt="">
+
+        </div>
+
+
+        <div class="modal-content">
+
+            <span id="modalType">
+                BAHNSAWY COFFEE
+            </span>
+
+            <h2 id="modalName">
+                المنتج
+            </h2>
+
+            <div class="stars">
+                ★★★★★
+            </div>
+
+            <p id="modalDescription">
+                منتج من منتجات البهنساوي المختارة بعناية.
+            </p>
+
+
+            <div class="modal-options">
+
+                <span>
+                    الوزن
+                </span>
+
+                <button class="size active">
+                    250 جم
+                </button>
+
+                <button class="size">
+                    500 جم
+                </button>
+
+                <button class="size">
+                    1 كجم
+                </button>
+
+            </div>
+
+
+            <div class="modal-price">
+
+                <strong id="modalPrice">
+                    185
+                </strong>
+
+                <span>
+                    جنيه
+                </span>
+
+            </div>
+
+
+            <button
+                class="gold-button modal-add"
+                id="modalAdd">
+
+                أضف إلى السلة
+
+                <span>
+                    +
+                </span>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- JavaScript -->
+<script src="script.js"></script>
+
 </body>
+
 </html>
